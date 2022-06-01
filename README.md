@@ -2,5 +2,5 @@
 ## React Native
 
 
-> $ npm install 
+> $ npm install
 > $ npm start
