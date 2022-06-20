@@ -13,4 +13,4 @@ start it
 > react-native-raw-bottom-sheet
 
 ### Tools used
-> OpenFoodFacts database API
+> OpenFoodFacts database API https://openfoodfacts.github.io/api-documentation/	
