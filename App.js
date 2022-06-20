@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Alert, Button, Vibration } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image,  Alert, Button, Vibration } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import RBSheet from "react-native-raw-bottom-sheet";
 import * as Haptics from 'expo-haptics'
@@ -17,8 +17,6 @@ export default function App() {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
-      console.log(status)
-      console.log(scanned)
     })();
   }, []);
 
@@ -31,7 +29,6 @@ export default function App() {
 
   const handleBarCodeScanned = async ({ type, data, bounds, cornerPoints }) => {
     setScanned(true)
-    console.log(cornerPoints)
     refRBSheet.current.open()
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
     const result = await getProductFromBarcode(data)
@@ -44,7 +41,9 @@ export default function App() {
         `https://world.openfoodfacts.org/api/v2/products/${barcode}`
       );
       const json = await response.json();
-      return json;
+      console.log(json.product.image_url)
+      console.log(barcode)
+      return json.product;
     } catch (error) {
       console.error(error);
     }
@@ -84,11 +83,17 @@ export default function App() {
               },
               container: {
                 borderRadius: 20,
-                padding: 10
+                padding: 10,
               }
             }}
           >
-            <View><Text>{ product?.product?.brands } </Text></View>
+            <View style={styles.viewScanned}>
+              <Image style={styles.alimentImage} source={{ uri: product?.image_url }}/>
+              <View>
+                <Text style={styles.alimentName}>{ product?.generic_name }</Text>
+                <Text style={styles.alimentBrand}>{ product?.brands }</Text>
+              </View>
+            </View>
           </RBSheet>
       </View>
   );
@@ -127,5 +132,22 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white'
+  },
+  alimentImage: {
+    height: 'auto',
+    width: '30%',
+    resizeMode: 'contain', 
+  },
+  viewScanned: {
+    flexDirection: 'row',
+    flex: 1,
+    padding: 10
+  },
+  alimentName: {
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  alimentBrand: {
+    fontSize: 16,
   }
 });
