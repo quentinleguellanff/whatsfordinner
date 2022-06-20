@@ -5,6 +5,12 @@ install dependencies
 > $ npm install
 
 start it
-> $ npm start
+> $ (expo/npm) start
 
-## Navigation ++
+### packages used
+> expo-haptics
+> expo-camera
+> react-native-raw-bottom-sheet
+
+### Tools used
+> OpenFoodFacts database API
