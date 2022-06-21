@@ -63,7 +63,7 @@ export default function Scan() {
             <TouchableOpacity
               style={styles.button}
               onPress={ console.log('test') }>
-              <Text style={styles.text}> torchLight icon here 1</Text>
+              <Text style={styles.text}> torchLight icon here </Text>
             </TouchableOpacity>
           </View>
             <View style={styles.scanRectContainer}>
