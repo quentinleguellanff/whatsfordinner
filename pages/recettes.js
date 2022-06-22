@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image,  Alert, 
 export default function Recettes() { 
   return (
     <View>
-        <Text>Bonjour</Text>
+        <Text>Recettes</Text>
     </View>
   );
 }

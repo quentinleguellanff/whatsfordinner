@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Recettes from './recettes';
 import Scan from './scan';
+import Aliments from './aliments';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,6 +30,10 @@ export default function Navbar() {
                 iconName = focused ? 'barcode-scan' : 'barcode-scan'
                 result = <MaterialCommunityIcons name={iconName} size={size} color={color} />
               }
+              else{
+                iconName = focused ? 'silverware-fork-knife' : 'silverware-fork-knife'
+                result = <MaterialCommunityIcons name={iconName} size={size} color={color} />
+              }
   
               // You can return any component that you like here!
               return result
@@ -37,8 +42,9 @@ export default function Navbar() {
             tabBarInactiveTintColor: 'gray',
           })}
     >
-      <Tab.Screen name="scan" component={Scan} />
       <Tab.Screen name="recettes" component={Recettes} />
+      <Tab.Screen name="scan" component={Scan} />
+      <Tab.Screen name="aliments" component={Aliments} />
     </Tab.Navigator>
   );
 }
