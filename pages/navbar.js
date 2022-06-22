@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image,  Alert, Button, Vibration } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image,  Alert, Button, Vibration, StatusBar } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import { Feather } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 import Recettes from './recettes';
 import Scan from './scan';
@@ -16,7 +16,7 @@ export default function Navbar() {
   return (
     <Tab.Navigator
         initialRouteName='recettes'
-        screenOptions={({ route }) => ({
+        screenOptions={ ({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               let iconName
               let result
@@ -40,6 +40,7 @@ export default function Navbar() {
             },
             tabBarActiveTintColor: 'tomato',
             tabBarInactiveTintColor: 'gray',
+            headerShown: false
           })}
     >
       <Tab.Screen name="recettes" component={Recettes} />
