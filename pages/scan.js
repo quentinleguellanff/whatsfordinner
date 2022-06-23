@@ -3,15 +3,19 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image,  Alert, 
 import { Camera, CameraType } from 'expo-camera';
 import RBSheet from "react-native-raw-bottom-sheet";
 import * as Haptics from 'expo-haptics'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function Scan( {navigation }) {
+
+export default function Scan( ) {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [product, setProduct] = useState(null);
   const refRBSheet = useRef();
-
+  const [productName, setproductName] = useState("")
+  const [image, setImage] = useState("")
+  const [categories, setCategories] = useState([])
 
   useEffect(() => {
     (async () => {
@@ -24,7 +28,7 @@ export default function Scan( {navigation }) {
     return <View />;
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>Pas d'accès à la camera :(</Text>;
   }
 
   const handleBarCodeScanned = async ({ type, data, bounds, cornerPoints }) => {
@@ -41,11 +45,57 @@ export default function Scan( {navigation }) {
         `https://fr.openfoodfacts.org/api/v2/products/${barcode}`
       );
       const json = await response.json();
-      console.log(json.product.image_url)
-      console.log(barcode)
+      setproductName(json.product.product_name)
+      setImage(json.product.image_url)
+      // console.log(json.product.product_name)
+      // console.log(json.product.categories_old)
+      // console.log(json.product.image_url)
+      // console.log(barcode)
+      let arrayCategories = json.product.categories_old.split(','); 
+      arrayCategories = arrayCategories.reverse()
+      arrayCategories = arrayCategories.slice(0,3)
+      let arrayToSend = []
+      arrayCategories.forEach(category => {
+        let categoryObj = new Object
+        categoryObj.name = category
+        arrayToSend.push(categoryObj)
+      })
+      setCategories(arrayToSend)
+      addProduct()
       return json.product;
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  const addProduct = async () =>{
+    try{
+      const userId = await AsyncStorage.getItem('userId')
+      console.log(categories)
+      console.log(image)
+      console.log(productName)
+      console.log(userId)
+      const response = await fetch('https://swbackapi.herokuapp.com/api/v1/ingredient', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            userId: userId,
+            product_name: productName,
+            image: image,
+            categories: categories
+          })
+        }
+      );
+      console.log(await response.json())
+      if(await response.status == 201){
+        console.log(await response.json())
+      }
+    }
+    catch(error){
+      console.log(error)
     }
   }
 
@@ -62,7 +112,7 @@ export default function Scan( {navigation }) {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={ console.log('test') }>
+              onPress={() => console.log('light') }>
               <Text style={styles.text}> torchLight icon here </Text>
             </TouchableOpacity>
           </View>

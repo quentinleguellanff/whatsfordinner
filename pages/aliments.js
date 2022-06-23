@@ -17,11 +17,9 @@ const [refreshing, setRefreshing] = useState(false);
   useEffect(() =>{
     const req = async () => {
       const userId = await AsyncStorage.getItem('userId')
-      console.log(userId)
-      const res = await fetch("https://swbackapi.herokuapp.com/api/v1/1/ingredients")
+      const res = await fetch(`https://swbackapi.herokuapp.com/api/v1/${userId}/ingredients`)
       const json = await res.json();
       setListIngredient(json.userFoodstuffs)
-
     }
     req()
   }, [refreshing])
@@ -84,7 +82,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     margin: 10,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
     borderRadius: 30,
   },
   ingredient:{
