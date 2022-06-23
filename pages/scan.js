@@ -47,10 +47,6 @@ export default function Scan( ) {
       const json = await response.json();
       setproductName(json.product.product_name)
       setImage(json.product.image_url)
-      // console.log(json.product.product_name)
-      // console.log(json.product.categories_old)
-      // console.log(json.product.image_url)
-      // console.log(barcode)
       let arrayCategories = json.product.categories_old.split(','); 
       arrayCategories = arrayCategories.reverse()
       arrayCategories = arrayCategories.slice(0,3)
@@ -71,10 +67,6 @@ export default function Scan( ) {
   const addProduct = async () =>{
     try{
       const userId = await AsyncStorage.getItem('userId')
-      console.log(categories)
-      console.log(image)
-      console.log(productName)
-      console.log(userId)
       const response = await fetch('https://swbackapi.herokuapp.com/api/v1/ingredient', {
           method: 'POST',
           headers: {
@@ -89,10 +81,6 @@ export default function Scan( ) {
           })
         }
       );
-      console.log(await response.json())
-      if(await response.status == 201){
-        console.log(await response.json())
-      }
     }
     catch(error){
       console.log(error)
@@ -101,7 +89,6 @@ export default function Scan( ) {
 
   const handleCloseBottomSheet = () => {
     setScanned(false)
-    console.log(scanned)
   }
 
     
