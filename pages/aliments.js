@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image,  Alert, Button, Vibration } from 'react-native';
+
 import { ScrollView } from 'react-native-gesture-handler';
 import { ActivityIndicator } from 'react-native-web';
 
@@ -16,27 +17,36 @@ const [listIngredient, setListIngredient] = useState([])
     }
     req()
   }, [])
-  
-  return (
+
+  if(listIngredient != []){
+    return (
+      <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.scrollView}>
+          {
+              listIngredient.map((ingredient) => {
+                return(
+                  <View key={ingredient.id} style={styles.ingredient}>
+                    <Image
+                      style={styles.images}
+                      source={{uri: ingredient.image}}
+                    />
+                    <Text style={styles.ingredientName}>{ingredient.name}</Text>
+                  </View>
+                )
+            })
+          }
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }else{
+    return ( 
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        {
-            listIngredient.map((ingredient) => {
-              return(
-                <View key={ingredient.id} style={styles.ingredient}>
-                  <Image
-                    style={styles.images}
-                    source={{uri: ingredient.image}}
-                  />
-                  <Text>{ingredient.name}</Text>
-                </View>
-              )
-    
-          })
-        }
-      </ScrollView>
+       <Text style={{fontSize: 24, fontWeight: 'bold'}}>Vous n'avez pas encore scanné d'aliments...</Text>
     </SafeAreaView>
-  );
+    );
+  }
+  
+  
 }
 
 const styles = StyleSheet.create({
@@ -45,27 +55,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: 'white',
   },
+  scrollView: {
+    width: "100%",
+    paddingLeft: 10
+  },
   images:{
-    resizeMode: "cover",
-    width: '30%',
-    height: '70%',
-    borderRadius: 10,
+    height: 100,
+    width: 100,
+    margin: 10,
+    resizeMode: 'cover',
+    borderRadius: 30,
   },
   ingredient:{
-    width: '90%',
-    height: '15%',
+    flex: 1,
     backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'start',
     marginTop: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
+    borderColor: '#dedede',
+    borderStyle: 'solid',
+    borderBottomWidth: 1,
+    borderTopWidth: 1
+  },
+  ingredientName: {
+    fontWeight: 'bold',
+    fontSize: 16,
   }
 })
