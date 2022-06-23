@@ -5,7 +5,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import * as Haptics from 'expo-haptics'
 
 
-export default function Scan() {
+export default function Scan( {navigation }) {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);

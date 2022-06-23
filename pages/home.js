@@ -11,7 +11,7 @@ import Aliments from './aliments';
 
 const Tab = createBottomTabNavigator();
 
-export default function Navbar() {
+export default function Home() {
     
   return (
     <Tab.Navigator
