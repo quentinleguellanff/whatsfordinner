@@ -124,7 +124,7 @@ export default function Scan( {navigation }) {
             <View style={styles.viewScanned}>
               <Image style={styles.alimentImage} source={{ uri: product?.image_url }}/>
               <View>
-                <Text style={styles.alimentName}>{ product?.generic_name }</Text>
+                <Text style={styles.alimentName}>{ product?.product_name }</Text>
                 <Text style={styles.alimentBrand}>{ product?.brands }</Text>
               </View>
             </View>
@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   torchLight: {
-
   },
   camera: {
     flex: 1,
@@ -168,14 +167,15 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   alimentImage: {
-    height: 'auto',
+    height: '75%',
     width: '30%',
-    resizeMode: 'contain', 
+    resizeMode: 'contain',
+    borderRadius: 10,
   },
   viewScanned: {
     flexDirection: 'row',
     flex: 1,
-    padding: 10
+    padding: 10,
   },
   alimentName: {
     fontWeight: 'bold',

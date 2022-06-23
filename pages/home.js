@@ -20,7 +20,6 @@ export default function Home() {
             tabBarIcon: ({ focused, color, size }) => {
               let iconName
               let result
-              console.log(route.name)
   
               if (route.name === 'recettes') {
                 iconName = focused ? 'book-open' : 'book'
