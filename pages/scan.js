@@ -38,7 +38,7 @@ export default function Scan() {
   const getProductFromBarcode = async (barcode) => {
     try {
       const response = await fetch(
-        `https://world.openfoodfacts.org/api/v2/products/${barcode}`
+        `https://fr.openfoodfacts.org/api/v2/products/${barcode}`
       );
       const json = await response.json();
       console.log(json.product.image_url)
@@ -90,7 +90,7 @@ export default function Scan() {
             <View style={styles.viewScanned}>
               <Image style={styles.alimentImage} source={{ uri: product?.image_url }}/>
               <View>
-                <Text style={styles.alimentName}>{ product?.generic_name }</Text>
+                <Text style={styles.alimentName}>{ product?.product_name }</Text>
                 <Text style={styles.alimentBrand}>{ product?.brands }</Text>
               </View>
             </View>
@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   torchLight: {
-
   },
   camera: {
     flex: 1,
@@ -134,14 +133,15 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   alimentImage: {
-    height: 'auto',
+    height: '75%',
     width: '30%',
-    resizeMode: 'contain', 
+    resizeMode: 'contain',
+    borderRadius: 10,
   },
   viewScanned: {
     flexDirection: 'row',
     flex: 1,
-    padding: 10
+    padding: 10,
   },
   alimentName: {
     fontWeight: 'bold',
