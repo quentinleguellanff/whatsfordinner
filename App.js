@@ -1,11 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image,  Alert, Button, Vibration } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+<<<<<<< HEAD
+import Navbar from './pages/navbar';
+import Login from './pages/Login';
+=======
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './pages/home';
 import Register from './pages/register';
 import Login from './pages/login';
 import SplashScreen from './pages/SplashScreen';
+>>>>>>> ece57be49ed8168a5feb4b36e0167fde90b611eb
 
 const Stack = createStackNavigator();
 
@@ -39,6 +44,10 @@ const Auth = () => {
 const App = () => {
   return (
     <NavigationContainer>
+<<<<<<< HEAD
+      {/* <Navbar/> */}
+      <Login/>
+=======
       <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
           name="SplashScreen"
@@ -56,6 +65,7 @@ const App = () => {
           options={{headerShown: false}}
         />
       </Stack.Navigator>
+>>>>>>> ece57be49ed8168a5feb4b36e0167fde90b611eb
     </NavigationContainer>
   );
 };
