@@ -11,7 +11,10 @@ export default function Scan( {navigation }) {
   const [scanned, setScanned] = useState(false);
   const [product, setProduct] = useState(null);
   const refRBSheet = useRef();
-
+  const userId = 1
+  const [productName, setproductName] = useState("")
+  const [image, setImage] = useState("")
+  const [categories, setCategories] = useState(["["])
 
   useEffect(() => {
     (async () => {
@@ -38,14 +41,45 @@ export default function Scan( {navigation }) {
   const getProductFromBarcode = async (barcode) => {
     try {
       const response = await fetch(
-        `https://world.openfoodfacts.org/api/v2/products/${barcode}`
+        `https://fr.openfoodfacts.org/api/v2/products/${barcode}`
       );
       const json = await response.json();
-      console.log(json.product.image_url)
+      setproductName(json.product.generic_name)
+      setImage(json.product.image_url)
+      console.log(json.product.categories)
+
+      console.log(json.product.image)
       console.log(barcode)
+      //addProduct()
       return json.product;
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  const addProduct = async() =>{
+    try{
+      const response = await fetch('https://swbackapi.herokuapp.com/api/v1/ingredient', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            userId: userId,
+            product_name: productName,
+            image: image,
+            categories: categories
+          })
+        }
+      );
+      // if(await response.status == 201){
+      //   const json = await response.json();
+
+      // }
+    }
+    catch(error){
+      console.log(error)
     }
   }
 
