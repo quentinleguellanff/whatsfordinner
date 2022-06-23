@@ -3,27 +3,31 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image,  Alert, 
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Recettes() {
-  const [data, setData] = useState([])
-  /*
-  const getRecettes = () =>{
-    let recettes = ''
-    for (let i=0; i<4; i++){
-      recettes += <View style={styles.recette}>
-      <Image
-        style={styles.images}
-        source={require('../images/pennesauceauchorizolight-1000x500.jpg')}
-        />
-      <View style={styles.containerRecette}>
-        <Text style={styles.title}>Pate sauce tomate</Text>
-        <Text style={styles.description}>La vraie recette italienne de la pasta alla carbonara...</Text>
-      </View>
-    </View>
-    }
-  }*/
+  const [dataRecettes, setDataRecettes] = useState([])
+
+  
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.bodyRecettes}>
+        {
+            dataRecettes.map(recette => {
+              recette =
+              <View key={dataRecettes.id} style={styles.recette}>
+                <Image
+                  style={styles.images}
+                  source={dataRecettes.image}
+                  />
+                <View style={styles.containerRecette}>
+                  <Text style={styles.title}>{dataRecettes.name}</Text>
+                  <Text style={styles.description}>{dataRecettes.description}</Text>
+                </View>
+              </View>;
+            })
+        }
+
+
+
         <View style={styles.recette}>
           <Image
             style={styles.images}
