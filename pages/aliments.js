@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image,  Alert, Button, Vibration, RefreshControl } from 'react-native';
 
 import { ScrollView } from 'react-native-gesture-handler';
-import { ActivityIndicator } from 'react-native-web';
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -19,7 +18,8 @@ const [refreshing, setRefreshing] = useState(false);
       const userId = await AsyncStorage.getItem('userId')
       const res = await fetch(`https://swbackapi.herokuapp.com/api/v1/${userId}/ingredients`)
       const json = await res.json();
-      setListIngredient(json.userFoodstuffs)
+      console.log(json)
+      setListIngredient(await json.userFoodstuffs)
     }
     req()
   }, [refreshing])

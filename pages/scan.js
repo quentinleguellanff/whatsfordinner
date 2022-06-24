@@ -57,33 +57,29 @@ export default function Scan( ) {
         arrayToSend.push(categoryObj)
       })
       setCategories(arrayToSend)
-      addProduct()
+      try{
+        const userId = await AsyncStorage.getItem('userId')
+        const response = await fetch('https://swbackapi.herokuapp.com/api/v1/ingredient', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              userId: userId,
+              product_name: productName,
+              image: image,
+              categories: categories
+            })
+          }
+        );
+      }
+      catch(error){
+        console.log(error)
+      }
       return json.product;
     } catch (error) {
       console.error(error);
-    }
-  }
-
-  const addProduct = async () =>{
-    try{
-      const userId = await AsyncStorage.getItem('userId')
-      const response = await fetch('https://swbackapi.herokuapp.com/api/v1/ingredient', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            userId: userId,
-            product_name: productName,
-            image: image,
-            categories: categories
-          })
-        }
-      );
-    }
-    catch(error){
-      console.log(error)
     }
   }
 
@@ -97,11 +93,6 @@ export default function Scan( ) {
         <Camera style={styles.camera} onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} type={CameraType.back}>
           <SafeAreaView style={styles.safeView}>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => console.log('light') }>
-              <Text style={styles.text}> torchLight icon here </Text>
-            </TouchableOpacity>
           </View>
             <View style={styles.scanRectContainer}>
               <View style={styles.scanRect}></View>
